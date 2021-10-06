@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boored</title>
+    <link href="BS5/bootstrap.min.css" rel="stylesheet" />
+    <style>body{margin: 50px 0;text-align: center;}</style>
+</head>
+
+<body>
+    
+    <div class="container">
+        <button class="btn btn-danger" onclick="getActivity()">Get Something To do</button>
+        <button class="btn btn-danger" onclick="getactivity10()">Get 10 Things To do</button>
+        <button class="btn btn-danger" onclick="getactivity100()">Get 100 Things To do</button>
+        <table class="table" id="tableid" >
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Activity</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+    </div>
+
+    <script src="BS5/JQuery-3.3.1.min.js"></script>
+    <script src="BS5/popper.min.js"></script>
+    <script src="BS5/bootstrap.min.js"></script>
+
+    <script>
+        
+        async function getActivity() {
+            //get data from api
+            let allposts = await fetch("https://www.boredapi.com/api/activity/");
+            let allpostsasjs = await allposts.json();
+
+            //identify and add rows
+            let table = document.getElementById('tableid');
+            let rowCount = table.rows.length ;
+            let row = table.insertRow(rowCount);
+
+            //add first cell and its data
+            let cell1 = row.insertCell(0);
+            cell1.innerHTML = rowCount ;
+
+            //add second cell 
+            let cell2 = row.insertCell(1);
+            cell2.innerHTML = `${allpostsasjs.activity}`;
+        }
+
+        let getactivity10 = function (){
+            for(i=0;i<10;i++){
+                getActivity()
+            }
+        }
+
+        let getactivity100 = function (){
+            for(i=0;i<100;i++){
+                getActivity()
+            }
+        }
+
+    </script>
+
+</body>
+</html>
